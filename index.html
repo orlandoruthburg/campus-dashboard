@@ -187,6 +187,22 @@ body {
   width: 100%; padding: 4px 8px; border: 1px solid var(--primary);
   border-radius: 4px; font-size: 14px; font-family: inherit; outline: none;
 }
+.todo-edit-form {
+  display: flex; gap: 6px; align-items: center; margin-bottom: 6px;
+}
+.todo-edit-form .todo-edit-input { flex: 1; }
+.todo-edit-priority {
+  padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; font-family: inherit; background: white; cursor: pointer;
+  outline: none;
+}
+.todo-edit-priority:focus { border-color: var(--primary); }
+.todo-edit-save {
+  padding: 4px 12px; border: none; border-radius: 4px;
+  background: var(--primary); color: white; font-size: 12px;
+  cursor: pointer; font-family: inherit;
+}
+.todo-edit-save:hover { background: var(--primary-dark); }
 .todo-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--gray-400); }
 .priority-badge { padding: 1px 7px; border-radius: 3px; font-size: 11px; font-weight: 600; }
 .priority-high { background: var(--danger-light); color: var(--danger); }
@@ -492,7 +508,7 @@ tbody tr.expired .position-cell { text-decoration: line-through; color: var(--gr
           <div class="panel-header">
             <div class="panel-title">
               <span class="icon" style="background:var(--purple-light);color:var(--purple);">📅</span>
-              未来安排（笔试/面试）
+              未来安排
             </div>
             <div class="panel-subtitle">来自岗位跟踪的下一步动作</div>
           </div>
@@ -917,12 +933,20 @@ function renderTodos() {
       <div class="todo-checkbox ${t.completed ? 'checked' : ''}" onclick="toggleTodo(${t.id})"></div>
       <div class="todo-content">
         ${isEditing ?
-          `<input type="text" class="todo-edit-input" id="todoEditInput_${t.id}" value="${t.title.replace(/"/g,'&quot;')}" onkeydown="if(event.key==='Enter')saveTodoEdit(${t.id})" onblur="saveTodoEdit(${t.id})">` :
-          `<div class="todo-title" ondblclick="startEditTodo(${t.id})">${t.title}</div>`
+          `<div class="todo-edit-form">
+            <input type="text" class="todo-edit-input" id="todoEditInput_${t.id}" value="${t.title.replace(/"/g,'&quot;')}" placeholder="任务内容" onkeydown="if(event.key==='Enter')saveTodoEdit(${t.id})">
+            <select class="todo-edit-priority" id="todoEditPriority_${t.id}">
+              <option value="high" ${t.priority==='high'?'selected':''}>高</option>
+              <option value="medium" ${t.priority==='medium'?'selected':''}>中</option>
+              <option value="low" ${t.priority==='low'?'selected':''}>低</option>
+            </select>
+            <button class="todo-edit-save" onclick="saveTodoEdit(${t.id})">保存</button>
+          </div>` :
+          `<div class="todo-title" ondblclick="startEditTodo(${t.id})">${t.title}</div>
+           <div class="todo-meta">
+             <span class="priority-badge priority-${t.priority}">${t.priority === 'high' ? '高' : t.priority === 'medium' ? '中' : '低'}</span>
+           </div>`
         }
-        <div class="todo-meta">
-          <span class="priority-badge priority-${t.priority}">${t.priority === 'high' ? '高' : t.priority === 'medium' ? '中' : '低'}</span>
-        </div>
       </div>
       <div class="todo-actions">
         <button class="todo-action-btn" onclick="startEditTodo(${t.id})" title="编辑">✏️</button>
@@ -960,11 +984,13 @@ function startEditTodo(id) {
 
 function saveTodoEdit(id) {
   const input = document.getElementById('todoEditInput_' + id);
+  const prioritySelect = document.getElementById('todoEditPriority_' + id);
   if (!input) return;
   const t = todos.find(t => t.id === id);
   if (t) {
     const newTitle = input.value.trim();
     if (newTitle) t.title = newTitle;
+    if (prioritySelect) t.priority = prioritySelect.value;
   }
   editingTodoId = null;
   saveTodos();
