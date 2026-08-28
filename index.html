@@ -382,6 +382,114 @@ tbody tr.expired .position-cell { text-decoration: line-through; color: var(--gr
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+.privacy-notice {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--gray-50);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.8;
+}
+.privacy-notice p { margin: 0; }
+
+.about-panel {
+  background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 100%);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 28px 32px;
+  margin-top: 24px;
+}
+.about-header { margin-bottom: 20px; }
+.about-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 6px;
+}
+.about-subtitle {
+  font-size: 14px;
+  color: var(--gray-500);
+}
+.about-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.about-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 280px;
+}
+.author-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.author-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 4px;
+}
+.author-desc {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+.about-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.contact-label {
+  color: var(--gray-400);
+}
+.contact-value {
+  color: var(--gray-700);
+  font-weight: 500;
+}
+.contact-btn { flex-shrink: 0; }
+
+.wechat-modal { width: 360px; }
+.wechat-body {
+  text-align: center;
+  padding: 24px;
+}
+.wechat-qr {
+  width: 220px;
+  height: 220px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  object-fit: cover;
+}
+.wechat-tip {
+  font-size: 14px;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin: 0;
+}
 </style>
 </head>
 <body>
@@ -515,6 +623,31 @@ tbody tr.expired .position-cell { text-decoration: line-through; color: var(--gr
           <div class="panel-body" id="upcomingList"></div>
         </div>
       </div>
+
+      <div class="about-panel">
+        <div class="about-header">
+          <div class="about-title">关于这个看板</div>
+          <div class="about-subtitle">一个帮助你管理求职进度的免费小工具</div>
+        </div>
+        <div class="about-body">
+          <div class="about-author">
+            <div class="author-avatar">奥</div>
+            <div class="author-info">
+              <div class="author-name">Made by 奥兰多Ruthburg</div>
+              <div class="author-desc">近10年HR/招聘经验，帮助大学生和年轻职场人解决求职、职业选择和职业发展问题</div>
+            </div>
+          </div>
+          <div class="about-contact">
+            <div class="contact-item">
+              <span class="contact-label">公众号</span>
+              <span class="contact-value">奥兰多话不多</span>
+            </div>
+            <button class="btn btn-primary contact-btn" onclick="openWechatModal()">
+              联系我 / 1v1咨询
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="view" id="view-tracking">
@@ -571,6 +704,10 @@ tbody tr.expired .position-cell { text-decoration: line-through; color: var(--gr
           <p>暂无匹配的岗位</p>
           <div class="empty-hint">试试调整筛选条件，或点击"添加岗位"新增</div>
         </div>
+      </div>
+      <div class="privacy-notice">
+        <p>🔒 你的求职数据只保存在自己的设备中，本网站不会收集或上传你的岗位、投递和面试记录。</p>
+        <p>更换设备或清理浏览器数据可能导致记录丢失，建议定期使用「导出数据」功能进行备份。</p>
       </div>
     </section>
 
@@ -756,6 +893,19 @@ tbody tr.expired .position-cell { text-decoration: line-through; color: var(--gr
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeEditModal()">取消</button>
       <button class="btn btn-primary" onclick="saveEdit()">保存修改</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="wechatModal">
+  <div class="modal wechat-modal">
+    <div class="modal-header">
+      <div class="modal-title">添加我的微信</div>
+      <button class="modal-close" onclick="closeWechatModal()">&times;</button>
+    </div>
+    <div class="modal-body wechat-body">
+      <img src="wechat-qr.png" alt="微信二维码" class="wechat-qr">
+      <p class="wechat-tip">添加时备注「校招看板」，方便我知道你是从这里来的。</p>
     </div>
   </div>
 </div>
@@ -1256,6 +1406,16 @@ function exportData() {
   a.click();
   URL.revokeObjectURL(url);
 }
+
+function openWechatModal() {
+  document.getElementById('wechatModal').classList.add('active');
+}
+function closeWechatModal() {
+  document.getElementById('wechatModal').classList.remove('active');
+}
+document.getElementById('wechatModal').addEventListener('click', function(e) {
+  if (e.target === this) closeWechatModal();
+});
 
 document.getElementById('editModal').addEventListener('click', function(e) {
   if (e.target === this) closeEditModal();
