@@ -761,16 +761,16 @@ tbody tr.expired .position-cell { text-decoration: line-through; color: var(--gr
 </div>
 
 <script>
-const STORAGE_KEY = 'autumn_recruitment_data_v4';
-const TODO_KEY = 'autumn_recruitment_todos_v4';
+const STORAGE_KEY = 'autumn_recruitment_data_v5';
+const TODO_KEY = 'autumn_recruitment_todos_v5';
 
 const defaultJobs = [
-  { id: 1, company: '字节跳动', position: '内容运营', type: '运营', city: '北京', link: 'https://jobs.bytedance.com/campus', status: 'pending', stage: '网申', applyDate: '', deadline: '2026-10-31', note: '八大职类之一，AI岗位占比高', nextAction: '', nextActionDate: '' },
-  { id: 2, company: '美团', position: '运营岗', type: '运营', city: '北京', link: 'https://zhaopin.meituan.com/web/campus', status: 'applied', stage: '笔试阶段', applyDate: '2026-08-20', deadline: '2026-10-22', note: '北斗计划免笔试，3个志愿', nextAction: '在线笔试', nextActionDate: '2026-09-05' },
-  { id: 3, company: '联合利华', position: '市场部管培生', type: '市场', city: '上海', link: 'https://campus.51job.com/unilever2025', status: 'pending', stage: '网申', applyDate: '', deadline: '2026-09-30', note: '26/27届均可，快消标杆', nextAction: '', nextActionDate: '' },
-  { id: 4, company: '腾讯', position: '市场营销', type: '市场', city: '深圳', link: 'https://join.qq.com', status: 'pending', stage: '网申', applyDate: '', deadline: '2026-10-15', note: '市场类含品牌传播、用户增长', nextAction: '', nextActionDate: '' },
-  { id: 5, company: '百度', position: '人力资源', type: 'HR', city: '北京', link: 'https://talent.baidu.com/jobs', status: 'pending', stage: '网申', applyDate: '', deadline: '2026-11-30', note: '综合类岗位，投递次数无上限', nextAction: '', nextActionDate: '' },
-  { id: 6, company: '联合利华', position: '人力资源部管培生', type: 'HR', city: '上海', link: 'https://campus.51job.com/unilever2025', status: 'pending', stage: '网申', applyDate: '', deadline: '2026-09-30', note: '快消HR管培', nextAction: '', nextActionDate: '' }
+  { id: 1, company: '腾讯', position: '市场研究', type: '市场', city: '深圳', link: 'https://join.qq.com', status: 'pending', stage: '网申', applyDate: '', deadline: '2026-08-31', note: '', nextAction: '', nextActionDate: '' },
+  { id: 2, company: '联合利华', position: '人力资源部管培生', type: 'HR', city: '上海', link: 'https://campus.51job.com/unilever2025', status: 'pending', stage: '网申', applyDate: '', deadline: '2026-10-02', note: '快消HR管培', nextAction: '', nextActionDate: '' },
+  { id: 3, company: '联合利华', position: '市场部管培生', type: '市场', city: '上海', link: 'https://campus.51job.com/unilever2025', status: 'interview', stage: '一面', applyDate: '', deadline: '2026-10-02', note: '腾讯会议号：123456', nextAction: '在线面试', nextActionDate: '2026-08-31' },
+  { id: 4, company: '美团', position: '产品运营岗', type: '运营', city: '北京', link: 'https://zhaopin.meituan.com/web/campus', status: 'written', stage: '笔试', applyDate: '', deadline: '2026-10-31', note: '', nextAction: '在线笔试', nextActionDate: '2026-09-05' },
+  { id: 5, company: '字节跳动', position: '电商内容策略运营（图文&短视频&直播）- TikTok Shop', type: '运营', city: '北京', link: 'https://jobs.bytedance.com/campus', status: 'pending', stage: '网申', applyDate: '', deadline: '2027-05-31', note: '', nextAction: '', nextActionDate: '' },
+  { id: 6, company: '百度', position: '北京-人力资源-COE方向(J101242)', type: 'HR', city: '北京', link: 'https://talent.baidu.com/jobs', status: 'pending', stage: '网申', applyDate: '', deadline: '2027-06-30', note: '所有岗位招满即止，建议尽早投递', nextAction: '', nextActionDate: '' }
 ];
 
 const defaultTodos = [
